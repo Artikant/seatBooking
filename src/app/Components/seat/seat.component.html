@@ -1,0 +1,29 @@
+<div class="container mt-4">
+    
+  
+    <div class="seat-grid bg-dark p-5">
+      <div *ngFor="let row of bookingService.rows" class="row justify-content-center mb-2">
+        <div *ngFor="let col of bookingService.columns" class="col-1 p-1">
+          <button
+            class="btn seat-btn" (click)="toggleSeat(row,col)" 
+            [ngClass]="(bookingService.getstatus(row,col)==='available'&&bookingService.getSeattype(row,col)==='VIP')?'btn-danger':bookingService.getstatus(row,col)==='selected'?'btn-warning':bookingService.getstatus(row,col)==='booked'?'btn-success':bookingService.getstatus(row,col)==='available'?'btn-light':''">
+            {{ row }}{{ col }}
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="mt-3 text-center">
+        <p><strong>Selected Seats: </strong>{{ getSelectedSeats().join(', ') }}</p>
+        <p><strong>Total Cot: </strong>{{ calculateTotalCost() | currency}}</p>
+        <button 
+        class="btn btn-primary" 
+        [disabled]="getSelectedSeats().length === 0" 
+        (click)="confirmBooking()">Confirm Booking</button> 
+    </div>
+    <button class="btn btn-warning" (click)="resetSelection()">Reset Selection</button>
+    <div class="text-center">
+        <h3>Screen</h3>
+      </div>
+  </div>
+  
